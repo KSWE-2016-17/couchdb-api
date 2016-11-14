@@ -8,7 +8,7 @@ DaoHelper.prototype.find = function(dest) {
     if (typeof $ === "function" && typeof $.ajax === "function") {
         $.ajax({
             url: dest,
-            type: "GET",
+            type: "POST",
             contentType: "application/json"
         }).success(function(data, textStatus, jqXHR) {
             var jsonResponse = JSON.parse(data);
@@ -22,7 +22,7 @@ DaoHelper.prototype.find = function(dest) {
         });
     } else {
         fetch(dest, {
-            method: "GET",
+            method: "POST",
             mode: "cors",
             headers: new Headers({
                 "Content-Type": "application/json"
@@ -91,7 +91,7 @@ DaoHelper.prototype.update = function(obj, dest) {
     if (typeof $ === "function" && typeof $.ajax === "function") {
         $.ajax({
             url: dest,
-            type: "PUT",
+            type: "POST",
             contentType: "application/json",
             data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
@@ -101,7 +101,7 @@ DaoHelper.prototype.update = function(obj, dest) {
         });
     } else {
         fetch(dest, {
-            method: "PUT",
+            method: "POST",
             mode: "cors",
             headers: new Headers({
                 "Content-Type": "application/json"
@@ -125,7 +125,7 @@ DaoHelper.prototype.delete = function(obj, dest) {
     if (typeof $ === "function" && typeof $.ajax === "function") {
         $.ajax({
             url: dest,
-            type: "DELETE",
+            type: "POST",
             contentType: "application/json"
         }).success(function(data, textStatus, jqXHR) {
             defer.resolve(JSON.parse(data));
@@ -134,7 +134,7 @@ DaoHelper.prototype.delete = function(obj, dest) {
         });
     } else {
         fetch(dest, {
-            method: "DELETE",
+            method: "POST",
             mode: "cors",
             headers: new Headers({
                 "Content-Type": "application/json"
