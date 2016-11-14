@@ -2,7 +2,7 @@ var q = require("q");
 
 var DaoHelper = function() {};
 
-DaoHelper.prototype.find = function(dest, callbacks) {
+DaoHelper.prototype.find = function(dest) {
     var defer = q.defer();
 
     if (typeof $ === "function" && typeof $.ajax === "function") {
@@ -16,15 +16,8 @@ DaoHelper.prototype.find = function(dest, callbacks) {
             for (var index = 0; index < jsonResponse.rows.length; index++) {
                 rows.push(jsonResponse.rows[index].value);
             }
-
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(rows);
-            }
             defer.resolve(rows);
         }).error(function(jqXHR, textStatus, errorThrown) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(errorThrown);
-            }
             defer.reject(errorThrown);
         });
     } else {
@@ -41,15 +34,8 @@ DaoHelper.prototype.find = function(dest, callbacks) {
             for (var index = 0; index < jsonResponse.rows.length; index++) {
                 rows.push(jsonResponse.rows[index].value);
             }
-
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(rows);
-            }
             defer.resolve(rows);
         }).catch(function(err) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(err);
-            }
             defer.reject(err);
         });
     }
@@ -57,7 +43,7 @@ DaoHelper.prototype.find = function(dest, callbacks) {
     return defer.promise;
 };
 
-DaoHelper.prototype.create = function(obj, dest, callbacks) {
+DaoHelper.prototype.create = function(obj, dest) {
     var defer = q.defer();
 
     if (typeof $ === "function" && typeof $.ajax === "function") {
@@ -71,14 +57,8 @@ DaoHelper.prototype.create = function(obj, dest, callbacks) {
             contentType: "application/json",
             data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(JSON.parse(data));
-            }
             defer.resolve(JSON.parse(data));
         }).error(function(jqXHR, textStatus, errorThrown) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(errorThrown);
-            }
             defer.reject(errorThrown);
         });
     } else {
@@ -96,14 +76,8 @@ DaoHelper.prototype.create = function(obj, dest, callbacks) {
         }).then(function(response) {
             return response.json();
         }).then(function(jsonResponse) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(jsonResponse);
-            }
             defer.resolve(jsonResponse)
         }).catch(function(err) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(err);
-            }
             defer.reject(err);
         });
     }
@@ -111,7 +85,7 @@ DaoHelper.prototype.create = function(obj, dest, callbacks) {
     return defer.promise;
 };
 
-DaoHelper.prototype.update = function(obj, dest, callbacks) {
+DaoHelper.prototype.update = function(obj, dest) {
     var defer = q.defer();
 
     if (typeof $ === "function" && typeof $.ajax === "function") {
@@ -121,14 +95,8 @@ DaoHelper.prototype.update = function(obj, dest, callbacks) {
             contentType: "application/json",
             data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(JSON.parse(data));
-            }
             defer.resolve(JSON.parse(data));
         }).error(function(jqXHR, textStatus, errorThrown) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(errorThrown);
-            }
             defer.reject(errorThrown);
         });
     } else {
@@ -142,14 +110,8 @@ DaoHelper.prototype.update = function(obj, dest, callbacks) {
         }).then(function(response) {
             return response.json();
         }).then(function(jsonResponse) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(jsonResponse);
-            }
             defer.resolve(jsonResponse);
         }).catch(function(err) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(err);
-            }
             defer.reject(err);
         });
     }
@@ -157,7 +119,7 @@ DaoHelper.prototype.update = function(obj, dest, callbacks) {
     return defer.promise;
 };
 
-DaoHelper.prototype.delete = function(obj, dest, callbacks) {
+DaoHelper.prototype.delete = function(obj, dest) {
     var defer = q.defer();
 
     if (typeof $ === "function" && typeof $.ajax === "function") {
@@ -166,14 +128,8 @@ DaoHelper.prototype.delete = function(obj, dest, callbacks) {
             type: "DELETE",
             contentType: "application/json"
         }).success(function(data, textStatus, jqXHR) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(JSON.parse(data));
-            }
             defer.resolve(JSON.parse(data));
         }).error(function(jqXHR, textStatus, errorThrown) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(errorThrown);
-            }
             defer.reject(errorThrown);
         });
     } else {
@@ -186,14 +142,8 @@ DaoHelper.prototype.delete = function(obj, dest, callbacks) {
         }).then(function(response) {
             return response.json();
         }).then(function(jsonResponse) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(jsonResponse);
-            }
             defer.resolve(jsonResponse);
         }).catch(function(err) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(err);
-            }
             defer.reject(err);
         });
     }
