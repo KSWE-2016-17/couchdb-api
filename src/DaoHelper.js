@@ -2,14 +2,15 @@ var q = require("q");
 
 var DaoHelper = function() {};
 
-DaoHelper.prototype.find = function(dest) {
+DaoHelper.prototype.find = function(obj, dest) {
     var defer = q.defer();
 
     if (typeof $ === "function" && typeof $.ajax === "function") {
         $.ajax({
             url: dest,
             type: "POST",
-            contentType: "application/json"
+            contentType: "application/json",
+            data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
             var jsonResponse = JSON.parse(data);
             var rows = [];
@@ -26,7 +27,8 @@ DaoHelper.prototype.find = function(dest) {
             mode: "cors",
             headers: new Headers({
                 "Content-Type": "application/json"
-            })
+            }),
+            body: JSON.stringify(obj)
         }).then(function(response) {
             return response.json();
         }).then(function(jsonResponse) {
@@ -126,7 +128,8 @@ DaoHelper.prototype.delete = function(obj, dest) {
         $.ajax({
             url: dest,
             type: "POST",
-            contentType: "application/json"
+            contentType: "application/json",
+            data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
             defer.resolve(JSON.parse(data));
         }).error(function(jqXHR, textStatus, errorThrown) {
@@ -138,7 +141,8 @@ DaoHelper.prototype.delete = function(obj, dest) {
             mode: "cors",
             headers: new Headers({
                 "Content-Type": "application/json"
-            })
+            }),
+            body: JSON.stringify(obj)
         }).then(function(response) {
             return response.json();
         }).then(function(jsonResponse) {
