@@ -5,36 +5,36 @@ var PreferenceDAO = function(connection) {
     this.daoHelper = new DaoHelper();
 };
 
-PreferenceDAO.prototype.findAll = function(callbacks) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/preference/_view/preferenceALL", callbacks);
+PreferenceDAO.prototype.findAll = function() {
+    return this.daoHelper.find(this.connection.getFullUrl() + "_design/preference/_view/preferenceALL");
 };
 
-PreferenceDAO.prototype.findById = function(id, callbacks) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/preference/_view/preferenceALL?key=[%22" + encodeURI(id) + "%22]", callbacks);
+PreferenceDAO.prototype.findById = function(id) {
+    return this.daoHelper.find(this.connection.getFullUrl() + "_design/preference/_view/preferenceALL?key=[%22" + encodeURI(id) + "%22]");
 };
 
-PreferenceDAO.prototype.findByProfileId = function(id, callbacks) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/preference/_view/preferenceByProfile?key=[%22" + encodeURI(id) + "%22]", callbacks);
+PreferenceDAO.prototype.findByProfileId = function(id) {
+    return this.daoHelper.find(this.connection.getFullUrl() + "_design/preference/_view/preferenceByProfile?key=[%22" + encodeURI(id) + "%22]");
 };
 
-PreferenceDAO.prototype.create = function(obj, callbacks) {
-    return this.daoHelper.create(obj, this.connection.getFullUrl(), callbacks);
+PreferenceDAO.prototype.create = function(obj) {
+    return this.daoHelper.create(obj, this.connection.getFullUrl());
 };
 
-PreferenceDAO.prototype.update = function(obj, callbacks) {
-    return this.daoHelper.update(obj, this.connection.getFullUrl() + obj._id, callbacks);
+PreferenceDAO.prototype.update = function(obj) {
+    return this.daoHelper.update(obj, this.connection.getFullUrl() + obj._id);
 };
 
-PreferenceDAO.prototype.createOrUpdate = function(obj, callbacks) {
+PreferenceDAO.prototype.createOrUpdate = function(obj) {
     if (obj._id) {
-        return this.update(obj, this.connection.getFullUrl() + obj._id, callbacks);
+        return this.update(obj, this.connection.getFullUrl() + obj._id);
     } else {
-        return this.create(obj, this.connection.getFullUrl(), callbacks);
+        return this.create(obj, this.connection.getFullUrl());
     }
 };
 
-PreferenceDAO.prototype.delete = function(obj, callbacks) {
-    return this.daoHelper.delete(obj, this.connection.getFullUrl() + obj._id + "?rev=" + encodeURI(obj._rev), callbacks);
+PreferenceDAO.prototype.delete = function(obj) {
+    return this.daoHelper.delete(obj, this.connection.getFullUrl() + obj._id + "?rev=" + encodeURI(obj._rev));
 };
 
 exports.default = PreferenceDAO;
