@@ -6,35 +6,47 @@ var UserDAO = function(connection) {
 };
 
 UserDAO.prototype.findAll = function() {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/user/_view/userALL");
+    return this.daoHelper.find({
+        query: "{ users { _id login password role } }"
+    }, this.connection.getFullUrl());
 };
 
 UserDAO.prototype.findById = function(id) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/user/_view/userALL?key=[%22" + encodeURI(id) + "%22]");
+    return this.daoHelper.find({
+        query: "{ user(id: '" + id + "') { _id login password role } }"
+    }, this.connection.getFullUrl());
 };
 
 UserDAO.prototype.findByLogin = function(login) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/user/_view/userLogin?key=[%22" + encodeURI(login) + "%22]");
+    return this.daoHelper.find({
+        query: "{ user(login: '" + login + "') { _id login password role } }"
+    }, this.connection.getFullUrl());
 };
 
 UserDAO.prototype.create = function(obj) {
-    return this.daoHelper.create(obj, this.connection.getFullUrl());
+    return this.daoHelper.create({
+        query: "mutation { createUser(record: { login: '" + obj.login + "', password: '" + obj.password + "', role: " + obj.role + " }) { record { _id login password role } } }"
+    }, this.connection.getFullUrl());
 };
 
 UserDAO.prototype.update = function(obj) {
-    return this.daoHelper.update(obj, this.connection.getFullUrl() + obj._id);
+    return this.daoHelper.update({
+        query: "mutation { createUser(record: { _id: '" + obj._id + "', login: '" + obj.login + "', password: '" + obj.password + "', role: " + obj.role + " }) { record { _id login password role } } }"
+    }, this.connection.getFullUrl());
 };
 
 UserDAO.prototype.createOrUpdate = function(obj) {
     if (obj._id) {
-        return this.update(obj, this.connection.getFullUrl() + obj._id);
+        return this.update(obj);
     } else {
-        return this.create(obj, this.connection.getFullUrl());
+        return this.create(obj);
     }
 };
 
 UserDAO.prototype.delete = function(obj) {
-    return this.daoHelper.delete(obj, this.connection.getFullUrl() + obj._id + "?rev=" + encodeURI(obj._rev));
+    return this.daoHelper.delete({
+        query: "mutation { deleteUser(_id: " + obj._id + ") { _id login password role } }"
+    }, this.connection.getFullUrl();
 };
 
 exports.default = UserDAO;
