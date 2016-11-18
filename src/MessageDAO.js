@@ -66,13 +66,13 @@ MessageDAO.prototype.findByFrom = function(id) {
 
 MessageDAO.prototype.create = function(obj) {
     return this.daoHelper.create({
-        query: "mutation { createMessage(record: { from_id: '" + obj.from_id + "', to_id: '" + obj.to_id + "', title: '" + obj.title + "', content: '" + obj.content + "', archivedFrom: false, archiveTo: false, deletedFrom: false, deletedTo: false }) { record: { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } } }"
+        query: "mutation { createMessage(record: { from_id: '" + obj.from_id + "', to_id: '" + obj.to_id + "', title: '" + obj.title + "', content: '" + obj.content + "', archivedFrom: false, archiveTo: false, deletedFrom: false, deletedTo: false }) { record { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } } }"
     }, this.connection.getFullUrl());
 };
 
 MessageDAO.prototype.update = function(obj) {
     return this.daoHelper.update({
-        query: "mutation { updateMessage(record: { _id: '" + obj._id + "', from_id: '" + obj.from_id + "', to_id: '" + obj.to_id + "', title: '" + obj.title + "', content: '" + obj.content + "', archivedFrom: false, archiveTo: false, deletedFrom: false, deletedTo: false }) { record: { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } } }"
+        query: "mutation { updateMessage(record: { _id: '" + obj._id + "', from_id: '" + obj.from_id + "', to_id: '" + obj.to_id + "', title: '" + obj.title + "', content: '" + obj.content + "', archivedFrom: false, archiveTo: false, deletedFrom: false, deletedTo: false }) { record { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } } }"
     }, this.connection.getFullUrl());
 };
 
