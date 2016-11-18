@@ -31,7 +31,7 @@ UserDAO.prototype.create = function(obj) {
 
 UserDAO.prototype.update = function(obj) {
     return this.daoHelper.update({
-        query: "mutation { createUser(record: { _id: '" + obj._id + "', login: '" + obj.login + "', password: '" + obj.password + "', role: " + obj.role + " }) { record { _id login password role } } }"
+        query: "mutation { updateUser(record: { _id: '" + obj._id + "', login: '" + obj.login + "', password: '" + obj.password + "', role: " + obj.role + " }) { record { _id login password role } } }"
     }, this.connection.getFullUrl());
 };
 
