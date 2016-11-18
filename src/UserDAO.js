@@ -19,7 +19,7 @@ UserDAO.prototype.findById = function(id) {
 
 UserDAO.prototype.findByLogin = function(login) {
     return this.daoHelper.find({
-        query: "{ user(login: '" + login + "') { _id login password role } }"
+        query: "{ users(filter: { login: '" + login + "' }) { _id login password role } }"
     }, this.connection.getFullUrl());
 };
 
