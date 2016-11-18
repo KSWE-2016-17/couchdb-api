@@ -8,76 +8,86 @@ var MessageDAO = function(connection) {
 };
 
 MessageDAO.prototype.findAll = function() {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgALL");
+    return this.daoHelper.find({
+        query: "{ messages { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
 };
 
 MessageDAO.prototype.findById = function(id) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgALL?key=[%22" + encodeURI(id) + "%22]");
+    return this.daoHelper.find({
+        query: "{ message(_id: '" + id + "') { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
 };
 
-MessageDAO.prototype.findAvailableFrom = function(userid) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgALLAvailableFrom?key=%22" + encodeURI(userid) + "%22");
+MessageDAO.prototype.findAvailableFrom = function(id) {
+    return this.daoHelper.find({
+        query: "{ messages(filter: { from_id: '" + id + "', archivedFrom: false, deletedFrom: false }) { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
 };
-MessageDAO.prototype.findAvailableTo = function(userid) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgALLAvailableTo?key=%22" + encodeURI(userid) + "%22");
-};
-
-MessageDAO.prototype.findUndeleteFrom = function(userid) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgAllUndeletedFrom?key=%22" + encodeURI(userid) + "%22");
-};
-MessageDAO.prototype.findUndeleteTo = function(userid) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgAllUndeletedTo?key=%22" + encodeURI(userid) + "%22");
-};
-MessageDAO.prototype.findArchivedFrom = function(userid) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgAllArchivedFrom?key=%22" + encodeURI(userid) + "%22");
-};
-MessageDAO.prototype.findArchivedTo = function(userid) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgAllArchivedTo?key=%22" + encodeURI(userid) + "%22");
+MessageDAO.prototype.findAvailableTo = function(id) {
+    return this.daoHelper.find({
+        query: "{ messages(filter: { to_id: '" + id + "', archivedTo: false, deletedTo: false }) { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
 };
 
-MessageDAO.prototype.findByTo = function(to) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgTo?key=[%22" + encodeURI(to) + "%22]");
+MessageDAO.prototype.findUndeleteFrom = function(id) {
+    return this.daoHelper.find({
+        query: "{ messages(filter: { from_id: '" + id + "', deletedFrom: false }) { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
+};
+MessageDAO.prototype.findUndeleteTo = function(id) {
+    return this.daoHelper.find({
+        query: "{ messages(filter: { to_id: '" + id + "', deletedTo: false }) { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
 };
 
-MessageDAO.prototype.findByFrom = function(from) {
-    return this.daoHelper.find(this.connection.getFullUrl() + "_design/msg/_view/msgFrom?key=[%22" + encodeURI(from) + "%22]");
+MessageDAO.prototype.findArchivedFrom = function(id) {
+    return this.daoHelper.find({
+        query: "{ messages(filter: { from_id: '" + id + "', archivedFrom: true }) { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
+};
+MessageDAO.prototype.findArchivedTo = function(id) {
+    return this.daoHelper.find({
+        query: "{ messages(filter: { to_id: '" + id + "', archivedTo: true }) { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
+};
+
+MessageDAO.prototype.findByTo = function(id) {
+    return this.daoHelper.find({
+        query: "{ messages(filter: { to_id: '" + id + "' }) { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
+};
+
+MessageDAO.prototype.findByFrom = function(id) {
+    return this.daoHelper.find({
+        query: "{ messages(filter: { from_id: '" + id + "' }) { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
 };
 
 MessageDAO.prototype.create = function(obj) {
-    return this.daoHelper.create(obj, this.connection.getFullUrl());
+    return this.daoHelper.create({
+        query: "mutation { createMessage(record: { from_id: '" + obj.from_id + "', to_id: '" + obj.to_id + "', title: '" + obj.title + "', content: '" + obj.content + "', archivedFrom: false, archiveTo: false, deletedFrom: false, deletedTo: false }) { record: { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } } }"
+    }, this.connection.getFullUrl());
 };
 
 MessageDAO.prototype.update = function(obj) {
-    return this.daoHelper.update(obj, this.connection.getFullUrl() + obj._id);
+    return this.daoHelper.update({
+        query: "mutation { updateMessage(record: { _id: '" + obj._id + "', from_id: '" + obj.from_id + "', to_id: '" + obj.to_id + "', title: '" + obj.title + "', content: '" + obj.content + "', archivedFrom: false, archiveTo: false, deletedFrom: false, deletedTo: false }) { record: { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } } }"
+    }, this.connection.getFullUrl());
 };
 
 MessageDAO.prototype.createOrUpdate = function(obj) {
     if (obj._id) {
-        return this.update(obj, this.connection.getFullUrl() + obj._id);
+        return this.update(obj;
     } else {
-        return this.create(obj, this.connection.getFullUrl());
+        return this.create(obj);
     }
 };
 
-MessageDAO.prototype.delete = function(obj, userId) {
-    var validOperation = false;
-
-    if (obj.from === userId) {
-        obj.deletedFrom = true;
-        validOperation = true;
-    } else if (obj.to === userId) {
-        obj.deletedTo = true;
-        validOperation = true;
-    }
-
-    if (validOperation) {
-        return this.daoHelper.update(obj, this.connection.getFullUrl() + obj._id + "?rev=" + encodeURI(obj._rev));
-    }
-
-    var defer = q.defer();
-    defer.reject("user is not sender or recipient of message");
-
-    return defer.promise;
+MessageDAO.prototype.delete = function(obj) {
+    return this.daoHelper.delete({
+        query: "mutation { removeMessage(_id: '" + obj._id + "') { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }"
+    }, this.connection.getFullUrl());
 };
 
 exports.default = MessageDAO;
