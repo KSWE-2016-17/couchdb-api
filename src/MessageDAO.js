@@ -78,7 +78,7 @@ MessageDAO.prototype.update = function(obj) {
 
 MessageDAO.prototype.createOrUpdate = function(obj) {
     if (obj._id) {
-        return this.update(obj;
+        return this.update(obj);
     } else {
         return this.create(obj);
     }
