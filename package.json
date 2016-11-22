@@ -4,6 +4,7 @@
   "description": "CouchDB based API for find.me.",
   "main": "dist/index.js",
   "scripts": {
+    "prepublish": "webpack --optimize-minimize --optimize-dedupe",
     "test": "echo \"Error: no test specified\" && exit 1",
     "startDev": "webpack-dev-server --watch --inline --hot",
     "dist": "webpack",
