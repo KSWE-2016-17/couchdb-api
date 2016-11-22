@@ -1,11 +1,10 @@
 module.exports = {
     entry: {
-        javascript: "./src/test-app.js",
-        html: "./src/test-app.html"
+        javascript: "./src/index.js"
     },
     output: {
         path: "./dist",
-        filename: "test-app.js"
+        filename: "index.js"
     },
     module: {
         loaders: [
@@ -18,10 +17,6 @@ module.exports = {
                         "es2015"
                     ]
                 }
-            },
-            {
-                test: /\.html$/,
-                loader: "file?name=[name].[ext]"
             }
         ]
     }
