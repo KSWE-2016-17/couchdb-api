@@ -1,4 +1,4 @@
-var DaoHelper = require("./DaoHelper")
+var DaoHelper = require("./DaoHelper");
 
 var ProfileDAO = function(connection) {
     this.connection = connection;

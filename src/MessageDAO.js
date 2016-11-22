@@ -1,6 +1,6 @@
 var q = require("q");
 
-var DaoHelper = require("./DaoHelper")
+var DaoHelper = require("./DaoHelper");
 
 var MessageDAO = function(connection) {
     this.connection = connection;
