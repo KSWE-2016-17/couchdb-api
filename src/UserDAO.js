@@ -7,31 +7,31 @@ var UserDAO = function(connection) {
 
 UserDAO.prototype.findAll = function() {
     return this.daoHelper.find({
-        query: "{ users { _id login password role } }"
+        query: '{ users { _id login password role } }'
     }, this.connection.getFullUrl());
 };
 
 UserDAO.prototype.findById = function(id) {
     return this.daoHelper.find({
-        query: "{ user(id: '" + id + "') { _id login password role } }"
+        query: '{ user(id: "' + id + '") { _id login password role } }'
     }, this.connection.getFullUrl());
 };
 
 UserDAO.prototype.findByLogin = function(login) {
     return this.daoHelper.find({
-        query: "{ users(filter: { login: '" + login + "' }) { _id login password role } }"
+        query: '{ users(filter: { login: "' + login + '" }) { _id login password role } }'
     }, this.connection.getFullUrl());
 };
 
 UserDAO.prototype.create = function(obj) {
     return this.daoHelper.create({
-        query: "mutation { createUser(record: { login: '" + obj.login + "', password: '" + obj.password + "', role: " + obj.role + " }) { record { _id login password role } } }"
+        query: 'mutation { createUser(record: { login: "' + obj.login + '", password: "' + obj.password + '", role: ' + obj.role + ' }) { record { _id login password role } } }'
     }, this.connection.getFullUrl());
 };
 
 UserDAO.prototype.update = function(obj) {
     return this.daoHelper.update({
-        query: "mutation { updateUser(record: { _id: '" + obj._id + "', login: '" + obj.login + "', password: '" + obj.password + "', role: " + obj.role + " }) { record { _id login password role } } }"
+        query: 'mutation { updateUser(record: { _id: "' + obj._id + '", login: "' + obj.login + '", password: "' + obj.password + '", role: ' + obj.role + ' }) { record { _id login password role } } }'
     }, this.connection.getFullUrl());
 };
 
@@ -45,7 +45,7 @@ UserDAO.prototype.createOrUpdate = function(obj) {
 
 UserDAO.prototype.delete = function(obj) {
     return this.daoHelper.delete({
-        query: "mutation { deleteUser(_id: " + obj._id + ") { _id login password role } }"
+        query: 'mutation { deleteUser(_id: ' + obj._id + ') { _id login password role } }'
     }, this.connection.getFullUrl());
 };
 
