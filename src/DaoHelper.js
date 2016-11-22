@@ -51,10 +51,6 @@ DaoHelper.prototype.create = function(obj, dest) {
     if (typeof $ === "function" && typeof $.ajax === "function") {
         $.ajax({
             url: dest,
-            /*
-             * If POST method doesn't work properly, try PUT method instead as
-             * stated here: https://wiki.apache.org/couchdb/HTTP_Document_API#POST
-             */
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(obj)
@@ -65,10 +61,6 @@ DaoHelper.prototype.create = function(obj, dest) {
         });
     } else {
         fetch(dest, {
-            /*
-             * If POST method doesn't work properly, try PUT method instead as
-             * stated here: https://wiki.apache.org/couchdb/HTTP_Document_API#POST
-             */
             method: "POST",
             mode: "cors",
             headers: new Headers({
