@@ -12,7 +12,7 @@ DaoHelper.prototype.find = function(obj, dest) {
             contentType: "application/json",
             data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
-            var jsonResponse = JSON.parse(data);
+            var jsonResponse = data;
             var rows = [];
             for (var index = 0; index < jsonResponse.rows.length; index++) {
                 rows.push(jsonResponse.rows[index].value);
@@ -29,8 +29,6 @@ DaoHelper.prototype.find = function(obj, dest) {
                 "Content-Type": "application/json"
             }),
             body: JSON.stringify(obj)
-        }).then(function(response) {
-            return response.json();
         }).then(function(jsonResponse) {
             var rows = [];
             for (var index = 0; index < jsonResponse.rows.length; index++) {
@@ -55,7 +53,7 @@ DaoHelper.prototype.create = function(obj, dest) {
             contentType: "application/json",
             data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
-            defer.resolve(JSON.parse(data));
+            defer.resolve(data);
         }).error(function(jqXHR, textStatus, errorThrown) {
             defer.reject(errorThrown);
         });
@@ -67,8 +65,6 @@ DaoHelper.prototype.create = function(obj, dest) {
                 "Content-Type": "application/json"
             }),
             body: JSON.stringify(obj)
-        }).then(function(response) {
-            return response.json();
         }).then(function(jsonResponse) {
             defer.resolve(jsonResponse)
         }).catch(function(err) {
@@ -89,7 +85,7 @@ DaoHelper.prototype.update = function(obj, dest) {
             contentType: "application/json",
             data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
-            defer.resolve(JSON.parse(data));
+            defer.resolve(data);
         }).error(function(jqXHR, textStatus, errorThrown) {
             defer.reject(errorThrown);
         });
@@ -101,8 +97,6 @@ DaoHelper.prototype.update = function(obj, dest) {
                 "Content-Type": "application/json"
             }),
             body: JSON.stringify(obj)
-        }).then(function(response) {
-            return response.json();
         }).then(function(jsonResponse) {
             defer.resolve(jsonResponse);
         }).catch(function(err) {
@@ -123,7 +117,7 @@ DaoHelper.prototype.delete = function(obj, dest) {
             contentType: "application/json",
             data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
-            defer.resolve(JSON.parse(data));
+            defer.resolve(data);
         }).error(function(jqXHR, textStatus, errorThrown) {
             defer.reject(errorThrown);
         });
@@ -135,8 +129,6 @@ DaoHelper.prototype.delete = function(obj, dest) {
                 "Content-Type": "application/json"
             }),
             body: JSON.stringify(obj)
-        }).then(function(response) {
-            return response.json();
         }).then(function(jsonResponse) {
             defer.resolve(jsonResponse);
         }).catch(function(err) {
