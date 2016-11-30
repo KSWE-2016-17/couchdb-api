@@ -14,9 +14,14 @@ DaoHelper.prototype.find = function(obj, dest) {
         }).success(function(data, textStatus, jqXHR) {
             var jsonResponse = data;
             var rows = [];
-            for (var index = 0; index < jsonResponse.rows.length; index++) {
-                rows.push(jsonResponse.rows[index].value);
+
+            for (var prop in jsonResponse.data) {
+                if (jsonResponse.data.hasOwnProperty(prop)) {
+                    rows = jsonResponse.data[prop];
+                    break;
+                }
             }
+
             defer.resolve(rows);
         }).error(function(jqXHR, textStatus, errorThrown) {
             defer.reject(errorThrown);
@@ -31,9 +36,14 @@ DaoHelper.prototype.find = function(obj, dest) {
             body: JSON.stringify(obj)
         }).then(function(jsonResponse) {
             var rows = [];
-            for (var index = 0; index < jsonResponse.rows.length; index++) {
-                rows.push(jsonResponse.rows[index].value);
+
+            for (var prop in jsonResponse.data) {
+                if (jsonResponse.data.hasOwnProperty(prop)) {
+                    rows = jsonResponse.data[prop];
+                    break;
+                }
             }
+
             defer.resolve(rows);
         }).catch(function(err) {
             defer.reject(err);
