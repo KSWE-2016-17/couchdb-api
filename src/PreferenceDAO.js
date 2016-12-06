@@ -13,7 +13,7 @@ PreferenceDAO.prototype.findAll = function() {
 
 PreferenceDAO.prototype.findById = function(id) {
     return this.daoHelper.find({
-        query: '{ preference(id: "' + id + '") { _id profile_id gender ageFrom ageTo haircolor eyecolor figure } }'
+        query: '{ preference(_id: "' + id + '") { _id profile_id gender ageFrom ageTo haircolor eyecolor figure } }'
     }, this.connection.getFullUrl());
 };
 

@@ -13,7 +13,7 @@ UserDAO.prototype.findAll = function() {
 
 UserDAO.prototype.findById = function(id) {
     return this.daoHelper.find({
-        query: '{ user(id: "' + id + '") { _id login password role } }'
+        query: '{ user(_id: "' + id + '") { _id login password role } }'
     }, this.connection.getFullUrl());
 };
 
