@@ -19,4 +19,3 @@ CouchDbApi.PreferenceDAO = PreferenceDAO;
 
 exports.default = CouchDbApi;
 module.exports = exports.default;
-

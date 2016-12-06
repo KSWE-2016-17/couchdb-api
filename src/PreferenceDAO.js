@@ -51,4 +51,3 @@ PreferenceDAO.prototype.delete = function(obj) {
 
 exports.default = PreferenceDAO;
 module.exports = exports.default;
-

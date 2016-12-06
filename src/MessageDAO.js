@@ -90,4 +90,3 @@ MessageDAO.prototype.delete = function(obj) {
 
 exports.default = MessageDAO;
 module.exports = exports.default;
-

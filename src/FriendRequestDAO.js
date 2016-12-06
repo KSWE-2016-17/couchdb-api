@@ -57,4 +57,3 @@ FriendRequestDAO.prototype.delete = function(obj) {
 
 exports.default = FriendRequestDAO;
 module.exports = exports.default;
-
