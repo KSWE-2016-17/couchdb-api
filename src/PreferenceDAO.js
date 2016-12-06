@@ -43,8 +43,8 @@ PreferenceDAO.prototype.createOrUpdate = function(obj) {
     }
 };
 
-PreferenceDAO.prototype.delete = function(obj) {
-    return this.daoHelper.delete({
+PreferenceDAO.prototype.remove = function(obj) {
+    return this.daoHelper.remove({
         query: 'mutation { removePreference(id: "' + obj._id + '") { _id profile_id gender ageFrom ageTo haircolor eyecolor figure } }'
     }, this.connection.getFullUrl());
 };

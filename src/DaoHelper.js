@@ -117,7 +117,7 @@ DaoHelper.prototype.update = function(obj, dest) {
     return defer.promise;
 };
 
-DaoHelper.prototype.delete = function(obj, dest) {
+DaoHelper.prototype.remove = function(obj, dest) {
     var defer = q.defer();
 
     if (typeof $ === "function" && typeof $.ajax === "function") {

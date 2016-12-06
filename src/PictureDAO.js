@@ -99,8 +99,8 @@ PictureDAO.prototype.createOrUpdate = function(obj) {
     }
 };
 
-PictureDAO.prototype.delete = function(obj) {
-    return this.daoHelper.delete(obj, this.connection.getFullUrl() + obj._id + '?rev=' + encodeURI(obj._rev));
+PictureDAO.prototype.remove = function(obj) {
+    return this.daoHelper.remove(obj, this.connection.getFullUrl() + obj._id + '?rev=' + encodeURI(obj._rev));
 };
 
 exports.default = PictureDAO;

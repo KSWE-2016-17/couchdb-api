@@ -49,8 +49,8 @@ FriendRequestDAO.prototype.createOrUpdate = function(obj) {
     }
 };
 
-FriendRequestDAO.prototype.delete = function(obj) {
-    return this.daoHelper.delete({
+FriendRequestDAO.prototype.remove = function(obj) {
+    return this.daoHelper.remove({
         query: '{ removeFriendRequest(_id: "' + obj._id + '") { _id from_id to_id } }'
     }, this.connection.getFullUrl());
 };

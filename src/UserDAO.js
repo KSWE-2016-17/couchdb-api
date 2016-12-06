@@ -43,8 +43,8 @@ UserDAO.prototype.createOrUpdate = function(obj) {
     }
 };
 
-UserDAO.prototype.delete = function(obj) {
-    return this.daoHelper.delete({
+UserDAO.prototype.remove = function(obj) {
+    return this.daoHelper.remove({
         query: 'mutation { deleteUser(_id: ' + obj._id + ') { _id login password role } }'
     }, this.connection.getFullUrl());
 };

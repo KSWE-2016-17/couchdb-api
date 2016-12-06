@@ -55,8 +55,8 @@ ProfileDAO.prototype.createOrUpdate = function(obj) {
     }
 };
 
-ProfileDAO.prototype.delete = function(obj) {
-    return this.daoHelper.delete({
+ProfileDAO.prototype.remove = function(obj) {
+    return this.daoHelper.remove({
         query: 'mutation { removeProfile(_id: "' + obj._id + '") { _id aboutme children email eyecolor familystatus figure firstname lastname profilepic gender birthday privacy { friends pictures } user_id friends_ids } }'
     }, this.connection.getFullUrl());
 };

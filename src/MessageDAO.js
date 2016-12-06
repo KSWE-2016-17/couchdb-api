@@ -82,8 +82,8 @@ MessageDAO.prototype.createOrUpdate = function(obj) {
     }
 };
 
-MessageDAO.prototype.delete = function(obj) {
-    return this.daoHelper.delete({
+MessageDAO.prototype.remove = function(obj) {
+    return this.daoHelper.remove({
         query: 'mutation { removeMessage(_id: "' + obj._id + '") { _id from_id to_id title content archivedFrom archivedTo deletedFrom deletedTo } }'
     }, this.connection.getFullUrl());
 };
