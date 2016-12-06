@@ -1,7 +1,7 @@
 var DaoHelper = require("./DaoHelper");
 
 var ProfileDAO = function(connection) {
-    this.connection = connection;
+    this.connection = connection.connection;
     this.daoHelper = new DaoHelper();
 };
 

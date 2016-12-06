@@ -1,8 +1,8 @@
-var DaoManager = function(connectionProperties) {
-    this._daos = {};
+var Connection = function(connectionProperties) {
     this.connection = {
         url: "" // Mandatory
     };
+
     this.connection.getFullUrl = function() {
         return this.url;
     };
@@ -18,17 +18,5 @@ var DaoManager = function(connectionProperties) {
     }
 };
 
-DaoManager.prototype.getDao = function(dao) {
-    if (!this._daos[dao]) {
-        this._daos[dao] = this.createDao(dao);
-    }
-
-    return this._daos[dao];
-};
-
-DaoManager.prototype.createDao = function(dao) {
-    return new dao(this.connection);
-};
-
-exports.default = DaoManager;
+exports.default = Connection;
 module.exports = exports.default;

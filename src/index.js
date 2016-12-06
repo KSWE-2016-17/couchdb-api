@@ -1,4 +1,4 @@
-var DaoManager = require("./DaoManager");
+var Connection = require("./Connection");
 var UserDAO = require("./UserDAO");
 var MessageDAO = require("./MessageDAO");
 var ProfileDAO = require("./ProfileDAO");
@@ -7,7 +7,7 @@ var PreferenceDAO = require("./PreferenceDAO");
 
 var CouchDbApi = function() {};
 
-CouchDbApi.DaoManager = DaoManager;
+CouchDbApi.Connection = Connection;
 
 CouchDbApi.UserDAO = UserDAO;
 CouchDbApi.MessageDAO = MessageDAO;
