@@ -1,5 +1,5 @@
 {
-  "name": "findme-react-couchdb-api",
+  "name": "graphql-findme-db-api",
   "version": "0.7.2",
   "description": "CouchDB based API for find.me.",
   "main": "src/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/findme-react/couchdb-api.git"
+    "url": "git+https://github.com/kswe-2016-17/graphql-findme-db-api.git"
   },
   "keywords": [
     "find.me",
@@ -24,9 +24,9 @@
   "license": "UNLICENSED",
   "private": true,
   "bugs": {
-    "url": "https://github.com/findme-react/couchdb-api/issues"
+    "url": "https://github.com/kswe-2016-17/graphql-findme-db-api/issues"
   },
-  "homepage": "https://github.com/findme-react/couchdb-api#readme",
+  "homepage": "https://github.com/kswe-2016-17/graphql-findme-db-api#readme",
   "dependencies": {
     "q": "1.4.1"
   },
