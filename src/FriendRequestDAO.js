@@ -51,7 +51,7 @@ FriendRequestDAO.prototype.createOrUpdate = function(obj) {
 
 FriendRequestDAO.prototype.remove = function(obj) {
     return this.daoHelper.remove({
-        query: '{ removeFriendRequest(_id: "' + obj._id + '") { _id from_id to_id } }'
+        query: 'mutation { removeFriendRequest(_id: "' + obj._id + '") { _id from_id to_id } }'
     }, this.connection.getFullUrl());
 };
 
