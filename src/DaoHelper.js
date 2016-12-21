@@ -2,108 +2,50 @@ var q = require("q");
 
 var DaoHelper = function() {};
 
-DaoHelper.prototype.find = function(dest, callbacks) {
+DaoHelper.prototype.find = function(obj, dest) {
     var defer = q.defer();
 
     if (typeof $ === "function" && typeof $.ajax === "function") {
         $.ajax({
             url: dest,
-            type: "GET",
-            contentType: "application/json"
-        }).success(function(data, textStatus, jqXHR) {
-            var jsonResponse = JSON.parse(data);
-            var rows = [];
-            for (var index = 0; index < jsonResponse.rows.length; index++) {
-                rows.push(jsonResponse.rows[index].value);
-            }
-
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(rows);
-            }
-            defer.resolve(rows);
-        }).error(function(jqXHR, textStatus, errorThrown) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(errorThrown);
-            }
-            defer.reject(errorThrown);
-        });
-    } else {
-        fetch(dest, {
-            method: "GET",
-            mode: "cors",
-            headers: new Headers({
-                "Content-Type": "application/json"
-            })
-        }).then(function(response) {
-            return response.json();
-        }).then(function(jsonResponse) {
-            var rows = [];
-            for (var index = 0; index < jsonResponse.rows.length; index++) {
-                rows.push(jsonResponse.rows[index].value);
-            }
-
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(rows);
-            }
-            defer.resolve(rows);
-        }).catch(function(err) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(err);
-            }
-            defer.reject(err);
-        });
-    }
-
-    return defer.promise;
-};
-
-DaoHelper.prototype.create = function(obj, dest, callbacks) {
-    var defer = q.defer();
-
-    if (typeof $ === "function" && typeof $.ajax === "function") {
-        $.ajax({
-            url: dest,
-            /*
-             * If POST method doesn't work properly, try PUT method instead as
-             * stated here: https://wiki.apache.org/couchdb/HTTP_Document_API#POST
-             */
             type: "POST",
             contentType: "application/json",
             data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(JSON.parse(data));
+            var jsonResponse = data;
+            var rows = [];
+
+            for (var prop in jsonResponse.data) {
+                if (jsonResponse.data.hasOwnProperty(prop)) {
+                    rows = jsonResponse.data[prop];
+                    break;
+                }
             }
-            defer.resolve(JSON.parse(data));
+
+            defer.resolve(rows);
         }).error(function(jqXHR, textStatus, errorThrown) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(errorThrown);
-            }
             defer.reject(errorThrown);
         });
     } else {
         fetch(dest, {
-            /*
-             * If POST method doesn't work properly, try PUT method instead as
-             * stated here: https://wiki.apache.org/couchdb/HTTP_Document_API#POST
-             */
             method: "POST",
             mode: "cors",
             headers: new Headers({
                 "Content-Type": "application/json"
             }),
             body: JSON.stringify(obj)
-        }).then(function(response) {
-            return response.json();
         }).then(function(jsonResponse) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(jsonResponse);
+            var rows = [];
+
+            for (var prop in jsonResponse.data) {
+                if (jsonResponse.data.hasOwnProperty(prop)) {
+                    rows = jsonResponse.data[prop];
+                    break;
+                }
             }
-            defer.resolve(jsonResponse)
+
+            defer.resolve(rows);
         }).catch(function(err) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(err);
-            }
             defer.reject(err);
         });
     }
@@ -111,45 +53,31 @@ DaoHelper.prototype.create = function(obj, dest, callbacks) {
     return defer.promise;
 };
 
-DaoHelper.prototype.update = function(obj, dest, callbacks) {
+DaoHelper.prototype.create = function(obj, dest) {
     var defer = q.defer();
 
     if (typeof $ === "function" && typeof $.ajax === "function") {
         $.ajax({
             url: dest,
-            type: "PUT",
+            type: "POST",
             contentType: "application/json",
             data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(JSON.parse(data));
-            }
-            defer.resolve(JSON.parse(data));
+            defer.resolve(data);
         }).error(function(jqXHR, textStatus, errorThrown) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(errorThrown);
-            }
             defer.reject(errorThrown);
         });
     } else {
         fetch(dest, {
-            method: "PUT",
+            method: "POST",
             mode: "cors",
             headers: new Headers({
                 "Content-Type": "application/json"
             }),
             body: JSON.stringify(obj)
-        }).then(function(response) {
-            return response.json();
         }).then(function(jsonResponse) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(jsonResponse);
-            }
-            defer.resolve(jsonResponse);
+            defer.resolve(jsonResponse)
         }).catch(function(err) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(err);
-            }
             defer.reject(err);
         });
     }
@@ -157,43 +85,63 @@ DaoHelper.prototype.update = function(obj, dest, callbacks) {
     return defer.promise;
 };
 
-DaoHelper.prototype.delete = function(obj, dest, callbacks) {
+DaoHelper.prototype.update = function(obj, dest) {
     var defer = q.defer();
 
     if (typeof $ === "function" && typeof $.ajax === "function") {
         $.ajax({
             url: dest,
-            type: "DELETE",
-            contentType: "application/json"
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(obj)
         }).success(function(data, textStatus, jqXHR) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(JSON.parse(data));
-            }
-            defer.resolve(JSON.parse(data));
+            defer.resolve(data);
         }).error(function(jqXHR, textStatus, errorThrown) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(errorThrown);
-            }
             defer.reject(errorThrown);
         });
     } else {
         fetch(dest, {
-            method: "DELETE",
+            method: "POST",
             mode: "cors",
             headers: new Headers({
                 "Content-Type": "application/json"
-            })
-        }).then(function(response) {
-            return response.json();
+            }),
+            body: JSON.stringify(obj)
         }).then(function(jsonResponse) {
-            if (callbacks && typeof callbacks.success === "function") {
-                callbacks.success(jsonResponse);
-            }
             defer.resolve(jsonResponse);
         }).catch(function(err) {
-            if (callbacks && typeof callbacks.error === "function") {
-                callbacks.error(err);
-            }
+            defer.reject(err);
+        });
+    }
+
+    return defer.promise;
+};
+
+DaoHelper.prototype.remove = function(obj, dest) {
+    var defer = q.defer();
+
+    if (typeof $ === "function" && typeof $.ajax === "function") {
+        $.ajax({
+            url: dest,
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(obj)
+        }).success(function(data, textStatus, jqXHR) {
+            defer.resolve(data);
+        }).error(function(jqXHR, textStatus, errorThrown) {
+            defer.reject(errorThrown);
+        });
+    } else {
+        fetch(dest, {
+            method: "POST",
+            mode: "cors",
+            headers: new Headers({
+                "Content-Type": "application/json"
+            }),
+            body: JSON.stringify(obj)
+        }).then(function(jsonResponse) {
+            defer.resolve(jsonResponse);
+        }).catch(function(err) {
             defer.reject(err);
         });
     }
