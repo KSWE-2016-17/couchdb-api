@@ -1,6 +1,6 @@
 {
   "name": "graphql-findme-db-api",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "description": "CouchDB based API for find.me.",
   "main": "src/index.js",
   "scripts": {
