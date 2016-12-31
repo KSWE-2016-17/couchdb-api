@@ -1,10 +1,10 @@
-# FindMe Database API
+# find.me Database API
 
-This API offers DAOs to communicate with the FindMe GraphQL service.
+This API offers DAOs to communicate with the find.me GraphQL service.
 
 As the code is written in EC5 there is no need to build any distribution.
 Just use this repository as dependency for your own project,
-if you want to communicate with the FindMe GraphQL service.
+if you want to communicate with the find.me GraphQL service.
 
 ## Using as npm dependency
 
